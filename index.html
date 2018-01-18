@@ -7,17 +7,14 @@
         <title>Titre</title>
     </head>
 
-    <body>
-    	<img src="image.jpeg" id="img" onclick="afficherCoords(document.getElementById('img'),event)">
-    	<img src="img2.png" id="img" >
+    <body  onload="genererCanvas()">
+    	<canvas id="Canvas">
+    	
+    	</canvas>
+    	
 
-
-    	<map name="#image1">
-    		<area shape="circle" coords="198,234,10" href="https://developer.mozilla.org" target="_self" alt="Page d'accueil MDN" />
-        	<!--<img src="image.jpeg" onclick="afficherCoords(event)">-->
-    	</map>
+    	
         
-        <img usemap="#image1" src="image.jpeg" >
         <script src="app.js"></script>
     </body>
 </html>
