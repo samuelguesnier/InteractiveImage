@@ -1,4 +1,4 @@
-var point = function(){
+var Point = function(){
 	this.image = new Image();
 	this.image.src = 'marker.png';
 	this.hauteur = 20;
@@ -7,38 +7,54 @@ var point = function(){
 	this.coordY = 0;
 	this.titre = "";
 	this.description = "";
+	this.enPlace = false;
 };
-var points = new Array();
+var listePoints = new Array();
+var c = document.getElementById("Canvas");
+var ctx = c.getContext("2d");
+var rect = c.getBoundingClientRect();
 
-var c1 = document.getElementById("Canvas");
 function imagePrincipale() {
-    var c = document.getElementById("Canvas");
-    var ctx = c.getContext("2d");
+
     var img = new Image();   // Crée un nouvel élément Image
-    var marker = new Image();
+	img.src = 'image.jpeg'; 
     img.onload = function() {
     	c.width = img.width;
     	c.height = img.height;
     	ctx.drawImage(img,0,0);
   };
-  
-	img.src = 'image.jpeg'; 
-	marker.src = 'marker.png';
-   
-	c.addEventListener('click',function(event){
-    	var rect = c.getBoundingClientRect();
-    	var x = event.clientX - rect.left;
-    	var y = event.clientY - rect.top;
-    	ctx.drawImage(marker,x-10,y-10,20,20);
-    	console.log("x: " + x + " y: " + y);
 
-	},false);
 }
 
-function enregisterMarkers(event){
-	marker = new point();
+c.addEventListener('click',enregisterPoint,false); //lors du click sur l'image principale
+
+function enregisterPoint(event){
+	let point = new Point();
+	point.coordX = event.clientX - rect.left;
+	point.coordY = event.clientY - rect.top;
+	listePoints.push(point);
+	placerPoints(listePoints);
 }
 
-function placerMarkers(argument) {
-	// body...
+function placerPoints(liste) {
+	for(let i = 0;i<liste.length;i++){
+
+		if (liste[i].enPlace === false){
+				let point = liste[i];
+				dessinerPoint(point);
+				
+		}
+	}
+}
+
+function dessinerPoint(point){
+		let x = point.coordX;
+		let y = point.coordY;
+		let h = point.hauteur;
+		let l = point.largeur;
+		point.image.onload = function() {
+    		ctx.drawImage(point.image,x-(h/2),y-(l/2),h,l);
+  		};
+    	
+    	point.enPlace = true;
 }
