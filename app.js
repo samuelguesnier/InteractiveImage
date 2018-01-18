@@ -1,6 +1,4 @@
 var Point = function(){
-	this.image = new Image();
-	this.image.src = 'marker.png';
 	this.hauteur = 20;
 	this.largeur = 20;
 	this.coordX = 0;
@@ -8,25 +6,20 @@ var Point = function(){
 	this.titre = "";
 	this.description = "";
 	this.enPlace = false;
+	this.onclick;
 };
 var listePoints = new Array();
-var c = document.getElementById("Canvas");
-var ctx = c.getContext("2d");
-var rect = c.getBoundingClientRect();
+var rect = C1.getBoundingClientRect();
 
-function imagePrincipale() {
+C1.addEventListener('click',enregisterPoint,false); //lors du click sur l'image principale
 
-    var img = new Image();   // Crée un nouvel élément Image
-	img.src = 'image.jpeg'; 
-    img.onload = function() {
-    	c.width = img.width;
-    	c.height = img.height;
-    	ctx.drawImage(img,0,0);
-  };
 
+function divImage(){
+	let img = document.getElementById('img');
+	let div = document.getElementById('C1');
+	div.style.height = img.ClientHeight;
+	div.style.width = img.ClientWidth;
 }
-
-c.addEventListener('click',enregisterPoint,false); //lors du click sur l'image principale
 
 function enregisterPoint(event){
 	let point = new Point();
@@ -41,20 +34,33 @@ function placerPoints(liste) {
 
 		if (liste[i].enPlace === false){
 				let point = liste[i];
-				dessinerPoint(point);
+				placerBouton(point);
 				
 		}
 	}
 }
 
-function dessinerPoint(point){
+function placerBouton(point){
 		let x = point.coordX;
 		let y = point.coordY;
 		let h = point.hauteur;
 		let l = point.largeur;
-		point.image.onload = function() {
-    		ctx.drawImage(point.image,x-(h/2),y-(l/2),h,l);
-  		};
-    	
     	point.enPlace = true;
+    	/*let bouton = document.createElement("BUTTON");
+    	bouton.style.position="absolute";
+    	bouton.style.left = x+"px";
+    	bouton.style.top = y+"px";
+    	bouton.setAttribute("class","bPoint");
+    	document.getElementById('C1').appendChild(bouton);  */
+    	let bouton = document.createElement("IMG");
+    	bouton.style.content = "url(marker.png)";
+    	bouton.style.height = "20px";
+    	bouton.style.width = "20px";
+       	bouton.style.position="absolute";
+    	bouton.style.left = x+"px";
+    	bouton.style.top = y+"px";
+    	bouton.style.zIndex="0";
+    	bouton.setAttribute("class","bPoint");
+    	document.getElementById('C1').appendChild(bouton);
+
 }

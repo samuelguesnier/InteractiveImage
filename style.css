@@ -1,0 +1,7 @@
+.bPoint{
+	-webkit-appearance: none;
+	background-image: ('marker.png');
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	border: none;
+}
